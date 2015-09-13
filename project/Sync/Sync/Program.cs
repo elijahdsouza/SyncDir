@@ -1,15 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Sync.Core;
+using Sync.Helpers;
+using Sync.Models;
 
 namespace Sync
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+
+        public static void Main(string[] args)
         {
+            Start(args);
+
+            Console.Write("Done");
+            Console.Read();
         }
+
+        private static void Start(string[] args)
+        {
+            var fileHelper = new FileInfoHelper();
+
+            var dirs = fileHelper.GetDirectoryInfo(args).ToList();
+
+            var syncDirA = new SyncDirectory(dirs.ElementAt(0));
+            var syncDirB = new SyncDirectory(dirs.ElementAt(1));
+
+            var syncMan = new SyncManager();
+            syncMan.Sync(syncDirA, syncDirB);
+        }
+
     }
 }
